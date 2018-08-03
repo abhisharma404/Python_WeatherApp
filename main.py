@@ -1,9 +1,9 @@
 #Weather App Initial Stage
 import requests
 import sys
+import urllib
 
 class URLGenerator(object):
-
 
     def __init__(self,user_api,location):
         self.location=location
@@ -17,6 +17,7 @@ class URLGenerator(object):
         return self.BASE_URL
 
 class RequestGenerator(object):
+
     def __init__(self,URLGenerator_obj):
         self.URLGenerator_obj=URLGenerator_obj
 
@@ -30,6 +31,7 @@ class RequestGenerator(object):
         return r
 
 class WeatherApp(object):
+
     def __init__(self):
         self.URLGenerator_obj=None
         self.RequestGenerator_obj=None
@@ -40,11 +42,11 @@ class WeatherApp(object):
     def main_func(self):
         self.key=input('Enter API Key ').strip()
         self.location=input('Enter location ').strip().lower()
-        self.URLGenerator_obj=URLGenerator(user_api=self.key,location=self.location)
+        self.location_encoded=urllib.parse.quote(self.location)
+        self.URLGenerator_obj=URLGenerator(user_api=self.key,location=self.location_encoded)
         self.RequestGenerator_obj=RequestGenerator(self.URLGenerator_obj)
         self.RequestGenerator_obj.request()
-        self.DataFetcher_obj=DataFetcher(self.RequestGenerator_obj,location=self.location)
-        self.DataFetcher_obj.getData()
+        self.DataFetcher_obj=DataFetcher(self.RequestGenerator_obj,location=self.location).getData()
 
 class DataFetcher(object):
 
@@ -55,6 +57,7 @@ class DataFetcher(object):
     def getData(self):
         json_data=self.RequestGenerator_obj.request().json()
         print('Temperature of {} is {}'.format(self.location,json_data['main']['temp']))
+
 
 if __name__=='__main__':
     wa=WeatherApp()
