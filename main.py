@@ -27,19 +27,34 @@ class RequestGenerator(object):
             print('Connected')
         else:
             print('Error')
+        return r
 
 class WeatherApp(object):
     def __init__(self):
         self.URLGenerator_obj=None
         self.RequestGenerator_obj=None
+        self.DataFetcher_obj=None
+        self.key=None
+        self.location=None
 
     def main_func(self):
-        key=input('Enter API Key ').strip()
-        location=input('Enter location ').strip().lower()
-        self.URLGenerator_obj=URLGenerator(user_api=key,location=location)
+        self.key=input('Enter API Key ').strip()
+        self.location=input('Enter location ').strip().lower()
+        self.URLGenerator_obj=URLGenerator(user_api=self.key,location=self.location)
         self.RequestGenerator_obj=RequestGenerator(self.URLGenerator_obj)
         self.RequestGenerator_obj.request()
+        self.DataFetcher_obj=DataFetcher(self.RequestGenerator_obj,location=self.location)
+        self.DataFetcher_obj.getData()
 
+class DataFetcher(object):
+
+    def __init__(self,RequestGenerator_obj,location):
+        self.RequestGenerator_obj=RequestGenerator_obj
+        self.location=location
+
+    def getData(self):
+        json_data=self.RequestGenerator_obj.request().json()
+        print('Temperature of {} is {}'.format(self.location,json_data['main']['temp']))
 
 if __name__=='__main__':
     wa=WeatherApp()
