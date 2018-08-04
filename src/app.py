@@ -11,15 +11,20 @@ class DataFetcher(object):
         self.location=location
 
     def getData(self):
-        json_data=self.RequestGenerator_obj.request().json()
+        json_data=''
         try:
-            print('Temperature of %s is %i C'%(self.location,json_data['main']['temp']-273.15))
-            print('Humidity : {}'.format(json_data['main']['humidity']))
-            print('Pressure : {}'.format(json_data['main']['pressure']))
-            print('Wind Speed : {}'.format(json_data['wind']['speed']))
-            print('Visibility : {}'.format(json_data['visibility']))
-        except KeyError:
-            pass
+            json_data=self.RequestGenerator_obj.request().json()
+        except:
+            print('There is a problem in your connection.')
+        if json_data:
+            try:
+                print('Temperature of %s is %i C'%(self.location,json_data['main']['temp']-273.15))
+                print('Humidity : {}'.format(json_data['main']['humidity']))
+                print('Pressure : {}'.format(json_data['main']['pressure']))
+                print('Wind Speed : {}'.format(json_data['wind']['speed']))
+                print('Visibility : {}'.format(json_data['visibility']))
+            except KeyError:
+                pass
 
 class WeatherApp(object):
 

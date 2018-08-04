@@ -21,8 +21,4 @@ class RequestGenerator(object):
     def request(self):
         r=requests.get(self.URLGenerator_obj.get_url())
         print(self.URLGenerator_obj.get_url())
-        if r.status_code==200:
-            print('Connected')
-        else:
-            print('Error')
         return r
