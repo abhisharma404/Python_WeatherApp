@@ -35,14 +35,19 @@ class WeatherApp(object):
         self._key=None
         self.location=None
 
+    def keyConfig(self):
+        self._key=input('Enter API Key ').strip()
+        ConfigReader().putKey(self._key)
+
     def main_func(self):
         if os.path.isfile('config.yaml'):
             self._key=ConfigReader().getKey()
+            if not self._key:
+                self.keyConfig()
             self.location=input('Enter location ').strip().lower()
         else:
             self._key=input('Enter API Key ').strip()
-            self.location=input('Enter location ').strip().lower()
-            ConfigReader().putKey(self._key)
+            self.keyConfig()
         self.location_encoded=urllib.parse.quote(self.location)
         self.URLGenerator_obj=URLGenerator(user_api=self._key,location=self.location_encoded)
         self.RequestGenerator_obj=RequestGenerator(self.URLGenerator_obj)
