@@ -3,30 +3,35 @@ from generator import URLGenerator,RequestGenerator
 from config import ConfigReader
 import os
 from os.path import expanduser
+from utils.csv_writer import CSVWriter
 
 class DataFetcher(object):
 
     def __init__(self,RequestGenerator_obj,location):
         self.RequestGenerator_obj=RequestGenerator_obj
         self.location=location
+        self.json_data=''
 
     def getData(self):
-        json_data=''
         try:
-            json_data=self.RequestGenerator_obj.request().json()
+            self.json_data=self.RequestGenerator_obj.request().json()
         except:
             print('There is a problem in your connection.')
-        if json_data:
+        if self.json_data:
             try:
-                print('Temperature of %s is %i C'%(self.location,json_data['main']['temp']-273.15))
-                print('Humidity : {}'.format(json_data['main']['humidity']))
-                print('Pressure : {}'.format(json_data['main']['pressure']))
-                print('Wind Speed : {}'.format(json_data['wind']['speed']))
-                print('Visibility : {}'.format(json_data['visibility']))
+                print('Temperature of %s is %i C'%(self.location,self.json_data['main']['temp']-273.15))
+                print('Humidity : {}'.format(self.json_data['main']['humidity']))
+                print('Pressure : {}'.format(self.json_data['main']['pressure']))
+                print('Wind Speed : {}'.format(self.json_data['wind']['speed']))
+                print('Visibility : {}'.format(self.json_data['visibility']))
             except KeyError:
                 pass
             finally:
                 print('-'*15)
+
+    def printData(self):
+        self.CSVWriter_obj=CSVWriter()
+        self.CSVWriter_obj.write_data(Location=self.location,Temperature=self.json_data['main']['temp']-273.15)
 
 class WeatherApp(object):
 
@@ -53,8 +58,9 @@ class WeatherApp(object):
         self.location_encoded=urllib.parse.quote(self.location)
         self.URLGenerator_obj=URLGenerator(user_api=self._key,location=self.location_encoded)
         self.RequestGenerator_obj=RequestGenerator(self.URLGenerator_obj)
-        self.DataFetcher_obj=DataFetcher(self.RequestGenerator_obj,location=self.location).getData()
+        self.DataFetcher_obj=DataFetcher(self.RequestGenerator_obj,location=self.location)
+        self.DataFetcher_obj.getData()
 
-        print('Restart?')
+        print('Print?')
         if input()=='Y':
-            self.main_func()
+            self.DataFetcher_obj.printData()
