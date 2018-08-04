@@ -1,5 +1,8 @@
 import urllib
 from generator import URLGenerator,RequestGenerator
+from config import ConfigReader
+import os
+from os.path import expanduser
 
 class DataFetcher(object):
 
@@ -22,8 +25,14 @@ class WeatherApp(object):
         self.location=None
 
     def main_func(self):
-        self._key=input('Enter API Key ').strip()
-        self.location=input('Enter location ').strip().lower()
+        if os.path.isfile('config.yaml'):
+            self._key=ConfigReader().getKey()
+            self.location=input('Enter location ').strip().lower()
+
+        else:
+            self._key=input('Enter API Key ').strip()
+            self.location=input('Enter location ').strip().lower()
+            ConfigReader().putKey(self._key)
         self.location_encoded=urllib.parse.quote(self.location)
         self.URLGenerator_obj=URLGenerator(user_api=self._key,location=self.location_encoded)
         self.RequestGenerator_obj=RequestGenerator(self.URLGenerator_obj)
