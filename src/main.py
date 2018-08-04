@@ -1,5 +1,5 @@
-#Weather App Initial Stage
-from generator import URLGenerator,RequestGenerator
+"""Python WeatherApp"""
+
 from app import WeatherApp
 
 if __name__=='__main__':

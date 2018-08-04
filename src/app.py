@@ -3,9 +3,10 @@ from generator import URLGenerator,RequestGenerator
 from config import ConfigReader
 import os
 from os.path import expanduser
-from utils.csv_writer import CSVWriter
+from utils.csv_writer import *
 
 class DataFetcher(object):
+    """Fetches the data from the generated URL"""
 
     def __init__(self,RequestGenerator_obj,location):
         self.RequestGenerator_obj=RequestGenerator_obj
@@ -29,9 +30,13 @@ class DataFetcher(object):
             finally:
                 print('-'*15)
 
-    def printData(self):
-        self.CSVWriter_obj=CSVWriter()
-        self.CSVWriter_obj.write_data(Location=self.location,Temperature=self.json_data['main']['temp']-273.15)
+    def exportData(self):
+        try:
+            self.CSVWriter_obj=CSVWriter()
+            self.CSVWriter_obj.write_data(Location=self.location,Temperature=self.json_data['main']['temp']-273.15,Humidity=self.json_data['main']['humidity'])
+            print('Data transferred to CSV, path is -> '+filepath)
+        except:
+            print('Could not save the data into CSV format.Please try again.')
 
 class WeatherApp(object):
 
@@ -63,4 +68,4 @@ class WeatherApp(object):
 
         print('Print data to a CSV file?')
         if input()=='Y':
-            self.DataFetcher_obj.printData()
+            self.DataFetcher_obj.exportData()
