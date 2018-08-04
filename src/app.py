@@ -12,8 +12,14 @@ class DataFetcher(object):
 
     def getData(self):
         json_data=self.RequestGenerator_obj.request().json()
-        print('Temperature of {} is {}'.format(self.location,json_data['main']['temp']))
-        print('Humidity : {}'.format(json_data['main']['humidity']))
+        try:
+            print('Temperature of {} is {}'.format(self.location,json_data['main']['temp']))
+            print('Humidity : {}'.format(json_data['main']['humidity']))
+            print('Pressure : {}'.format(json_data['main']['pressure']))
+            print('Wind Speed : {}'.format(json_data['wind']['speed']))
+            print('Visibility : {}'.format(json_data['visibility']))
+        except KeyError:
+            pass
 
 class WeatherApp(object):
 
@@ -28,7 +34,6 @@ class WeatherApp(object):
         if os.path.isfile('config.yaml'):
             self._key=ConfigReader().getKey()
             self.location=input('Enter location ').strip().lower()
-
         else:
             self._key=input('Enter API Key ').strip()
             self.location=input('Enter location ').strip().lower()
