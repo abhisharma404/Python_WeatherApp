@@ -13,7 +13,7 @@ class DataFetcher(object):
     def getData(self):
         json_data=self.RequestGenerator_obj.request().json()
         try:
-            print('Temperature of {} is {}'.format(self.location,json_data['main']['temp']))
+            print('Temperature of %s is %i C'%(self.location,json_data['main']['temp']-273.15))
             print('Humidity : {}'.format(json_data['main']['humidity']))
             print('Pressure : {}'.format(json_data['main']['pressure']))
             print('Wind Speed : {}'.format(json_data['wind']['speed']))
