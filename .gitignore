@@ -1,2 +1,4 @@
 src/__pycache__
 config.yaml
+weather.csv
+src/utils/__pycache__
