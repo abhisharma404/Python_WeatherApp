@@ -3,10 +3,10 @@ from os.path import expanduser
 
 __all__ = ["filepath","CSVWriter"]
 
-
 filepath=expanduser('~')+'/weather.csv'
 
 class CSVWriter(object):
+    """Writes the details into a CSV file"""
 
     def __init__(self):
         self.fieldnames=[]

@@ -1,7 +1,7 @@
 import requests
 
 class URLGenerator(object):
-    """This will generate the URL for fetching the API data."""
+    """This will generate the URL for fetching the API data"""
 
     def __init__(self,user_api,location):
         self.location=location
@@ -19,7 +19,7 @@ class RequestGenerator(object):
         self.URLGenerator_obj=URLGenerator_obj
 
     def request(self):
-        """Connect to the URl"""
+        """Connects to the URL"""
 
         r=requests.get(self.URLGenerator_obj.get_url())
         print('-'*15)
