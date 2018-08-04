@@ -1,5 +1,4 @@
 #Weather App Initial Stage
-
 from generator import URLGenerator,RequestGenerator
 from app import WeatherApp
 

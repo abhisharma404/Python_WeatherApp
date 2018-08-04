@@ -61,6 +61,6 @@ class WeatherApp(object):
         self.DataFetcher_obj=DataFetcher(self.RequestGenerator_obj,location=self.location)
         self.DataFetcher_obj.getData()
 
-        print('Print?')
+        print('Print data to a CSV file?')
         if input()=='Y':
             self.DataFetcher_obj.printData()
