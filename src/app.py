@@ -52,3 +52,7 @@ class WeatherApp(object):
         self.URLGenerator_obj=URLGenerator(user_api=self._key,location=self.location_encoded)
         self.RequestGenerator_obj=RequestGenerator(self.URLGenerator_obj)
         self.DataFetcher_obj=DataFetcher(self.RequestGenerator_obj,location=self.location).getData()
+        
+        print('Restart?')
+        if input()=='Y':
+            self.main_func()
