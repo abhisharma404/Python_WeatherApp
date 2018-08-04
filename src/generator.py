@@ -20,5 +20,6 @@ class RequestGenerator(object):
 
     def request(self):
         r=requests.get(self.URLGenerator_obj.get_url())
-        print(self.URLGenerator_obj.get_url())
+        print('-'*15)
+        #print(self.URLGenerator_obj.get_url())
         return r
