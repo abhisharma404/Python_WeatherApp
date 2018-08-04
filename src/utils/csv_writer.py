@@ -5,7 +5,6 @@ filepath=expanduser('~')+'/weather.csv'
 
 class CSVWriter(object):
 
-
     def __init__(self):
         self.fieldnames=[]
 
