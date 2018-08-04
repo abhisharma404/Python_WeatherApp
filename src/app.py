@@ -23,7 +23,7 @@ class DataFetcher(object):
 
         if self.json_data: #If data is fetched
             try:
-                """Currently the following feature is only addded:
+                """Currently the following features are only addded:
                     1.Temperature
                     2.Humidity
                     3.Pressure
