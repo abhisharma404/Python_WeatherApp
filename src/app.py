@@ -66,6 +66,13 @@ class WeatherApp(object):
         self._key=input('Enter API Key ').strip()
         ConfigReader().putKey(self._key)
 
+    def _restartApp(self):
+        """Restarts the app"""
+        
+        print('Restart again...?')
+        if input()=='Y':
+            self.main_func()
+
     def main_func(self):
         if os.path.isfile('config.yaml'): #if config file is there but empty
             self._key=ConfigReader().getKey()
@@ -85,3 +92,6 @@ class WeatherApp(object):
         print('Print data to a CSV file?(Y/N)')
         if input()=='Y':
             self.DataFetcher_obj.exportData()
+            self._restartApp()
+        else:
+            self._restartApp()
