@@ -17,7 +17,7 @@ class DataFetcher(object):
         """Fetches JSON data"""
 
         try:
-            self.json_data=self.RequestGenerator_obj.request().json()
+            self.json_data=self.RequestGenerator_obj.request.json()
         except:
             print('There is a problem in your connection.')
 
@@ -60,6 +60,7 @@ class WeatherApp(object):
         self._key=None
         self.location=None
 
+    @property
     def keyConfig(self):
         """Creates a new key config file"""
 
@@ -68,7 +69,7 @@ class WeatherApp(object):
 
     def _restartApp(self):
         """Restarts the app"""
-        
+
         print('Restart again...?')
         if input()=='Y':
             self.main_func()
@@ -77,10 +78,10 @@ class WeatherApp(object):
         if os.path.isfile('config.yaml'): #if config file is there but empty
             self._key=ConfigReader().getKey()
             if not self._key:
-                self.keyConfig()
+                self.keyConfig
             self.location=input('Enter location ').strip().lower()
         else: #if there is no config file then create one
-            self.keyConfig()
+            self.keyConfig
             self.location=input('Enter location ').strip().lower()
 
         self.location_encoded=urllib.parse.quote(self.location)
